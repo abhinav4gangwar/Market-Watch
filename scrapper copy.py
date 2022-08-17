@@ -19,7 +19,7 @@ from pymongo import MongoClient
 client = pymongo.MongoClient("mongodb+srv://bpsfocusenergy:bpsfocusenergy32@cluster0.3muhn.mongodb.net/?retryWrites=true&w=majority")
 db = client.bps
 collection = db.market_update
-print (1)
+
 
 def scraping():
 
@@ -75,12 +75,6 @@ def scraping():
 
 
 
-
-
-
-
-
-
     driver.get("https://sgxnifty.org/")
     j=driver.find_element(by=By.XPATH, value='//*[@id="indexes-div"]/div[1]/div[4]/table/tbody/tr/td[3]').text
     k=driver.find_element(by=By.XPATH, value='//*[@id="indexes-div"]/div[1]/div[3]/table/tbody/tr/td[1]').text
@@ -89,20 +83,20 @@ def scraping():
 
 
 
-    driver.get("https://www.ccilindia.com/OMHome.aspx")
-    gs=driver.find_element(by=By.XPATH, value='//*[@id="grdNDSOMReg"]/tbody/tr[2]/td[10]').text
+    # driver.get("https://www.ccilindia.com/OMHome.aspx")
+    # gs=driver.find_element(by=By.XPATH, value='//*[@id="grdNDSOMReg"]/tbody/tr[2]/td[10]').text
 
 
 
 
-    driver.get("https://www.ccilindia.com/OMMWSG.aspx")
-    sdl_rate=0
-    for i in range(1,20):
-        t=driver.find_element(by=By.XPATH, value=f'//*[@id="grdMWSG"]/tbody/tr[{i}]/td[2]').text[-4:]
-        if t=='2032':
-            u=driver.find_element(by=By.XPATH, value=f'//*[@id="grdMWSG"]/tbody/tr[{i}]/td[7]').text
-            if ((float(u))>sdl_rate):
-                sdl_rate=float(u)        
+    # driver.get("https://www.ccilindia.com/OMMWSG.aspx")
+    # sdl_rate=0
+    # for i in range(1,20):
+    #     t=driver.find_element(by=By.XPATH, value=f'//*[@id="grdMWSG"]/tbody/tr[{i}]/td[2]').text[-4:]
+    #     if t=='2032':
+    #         u=driver.find_element(by=By.XPATH, value=f'//*[@id="grdMWSG"]/tbody/tr[{i}]/td[7]').text
+    #         if ((float(u))>sdl_rate):
+    #             sdl_rate=float(u)        
 
 
     driver.close()
@@ -122,8 +116,8 @@ def scraping():
     'sgx' : f'{j}/{k}*({l})',
     'cnx' : f'{m}/{n}({z})',
     'sensex' : f'{p}/{q}({r})',
-    'gs' : f"{gs}%",
-    'sdl': str(sdl_rate)+"%",
+    # 'gs' : f"{gs}%",
+    # 'sdl': str(sdl_rate)+"%",
     'psu_5' : '7.53%',
     'psd_10' : '7.73%'}
 
@@ -166,20 +160,30 @@ def scraping():
     print(f"CNX NIFTY            : {m}/{n}({z})")
     print(f"BSE SENSEX           : {p}/{q}({r})")
     print(" ")
-    print(f"6.54% GS 2032        : {gs}% ")
-    print(f"10 year SDL Rate     : {sdl_rate}%")
+    # print(f"6.54% GS 2032        : {gs}% ")
+    # print(f"10 year SDL Rate     : {sdl_rate}%")
     print("5 year PSU(AAA)      : 7.53%")
     print("10 year PSU(AAA)     : 7.73% ")
     print(datetime.datetime.now()-start)
 
 
 
-scraping()
+
 #  schedule.every().day.at("11:14:00").do(scraping)
 # # print("hello")
 
 # while True:
 #     schedule.run_pending()
+
+print ("Starting Scraping")
+scraping()
+print ("Scraping Done")
+print ("No Errors found")
+
+conf = input("Do you wanna upload mongo [y/n]")
+
+
+
 
 
 
